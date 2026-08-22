@@ -41,6 +41,29 @@ Terraform configuration but cannot become a general model runtime.
   access, application-inference-profile tags, and budget alerts make it easier
   to test models without distributing provider keys.
 
+## Good-fit use cases
+
+This arrangement is especially useful for interactive, human-led work where a
+developer or knowledge worker wants to select an approved model from OpenCode
+without operating a separate AI platform.
+
+- **Software development and coding:** explore an unfamiliar codebase, draft or
+  review a change, explain an error, generate tests, refactor with human review,
+  or compare an approved model's response to another model.
+- **Technical and operational writing:** turn approved, non-sensitive notes into
+  outlines, runbooks, checklists, release notes, or first-pass documentation.
+- **Research and analysis:** summarize material the client is permitted to send
+  to the selected model, structure options, identify follow-up questions, or
+  compare approaches before a human decision.
+- **Controlled model evaluation:** test a small representative prompt set across
+  approved Bedrock models, record token use and quality observations, then use
+  that evidence to decide whether a model belongs in the catalog.
+
+It is not intended to make unsupervised production decisions, process data that
+has not been approved for the selected model/route, replace code review, or
+serve a public application. Those needs require additional application,
+security, privacy, and operational design beyond this template.
+
 ## Fastest safe path to first value
 
 1. Decide whether to use a new workload account or an approved existing client
