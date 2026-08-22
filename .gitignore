@@ -2,7 +2,10 @@
 *.tfstate
 *.tfstate.*
 *.tfplan
-*.tfvars
+terraform.tfvars
+terraform.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
 crash.log
 
 # Account-specific OpenCode configuration is intentionally local.

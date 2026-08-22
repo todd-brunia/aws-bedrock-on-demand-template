@@ -16,7 +16,9 @@ For every candidate, while authenticated to the workload account:
    applicable system inference profile ARN.
 4. Add a descriptive alias and exact source ARN to
    `infra/environments/pilot-bedrock/model-catalog.tfvars` in a reviewed pull
-   request, then run the protected apply workflow.
+   request, then run the protected apply workflow. This file is intentionally
+   tracked because it is the reviewed public catalog; use the ignored
+   `terraform.tfvars` or `*.auto.tfvars` files only for account-specific values.
 5. Regenerate the ignored OpenCode config and use `/models` to test the alias.
 
 Start with `nova-lite`. DeepSeek and Qwen are intended candidates, not permanent
