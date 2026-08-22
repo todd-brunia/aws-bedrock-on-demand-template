@@ -33,6 +33,18 @@ jobs:
           aws-region: us-east-1
           role-to-assume: ${{ vars.AWS_TERRAFORM_APPLY_ROLE_ARN }}
       - run: terraform -chdir=infra/environments/pilot-bedrock init -input=false -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}"
-      - run: terraform -chdir=infra/environments/pilot-bedrock apply -input=false -auto-approve -var="aws_account_id=${{ vars.AWS_ACCOUNT_ID }}"
+      - run: terraform -chdir=infra/environments/pilot-bedrock plan -input=false -out=pilot-bedrock.tfplan -var="aws_account_id=${{ vars.AWS_ACCOUNT_ID }}"
+      - name: Reject destructive Bedrock apply plan
+        run: |
+          set -euo pipefail
+          destructive_changes="$(terraform -chdir=infra/environments/pilot-bedrock show -json pilot-bedrock.tfplan | jq -r '.resource_changes[]? | select(.change.actions | index("delete")) | .address')"
+          test -z "$destructive_changes"
+      - run: terraform -chdir=infra/environments/pilot-bedrock apply -input=false pilot-bedrock.tfplan
       - run: terraform -chdir=infra/environments/pilot-iam init -input=false -backend-config="bucket=${{ vars.TF_STATE_BUCKET }}"
-      - run: terraform -chdir=infra/environments/pilot-iam apply -input=false -auto-approve -var="aws_account_id=${{ vars.AWS_ACCOUNT_ID }}" -var="state_bucket_name=${{ vars.TF_STATE_BUCKET }}"
+      - run: terraform -chdir=infra/environments/pilot-iam plan -input=false -out=pilot-iam.tfplan -var="aws_account_id=${{ vars.AWS_ACCOUNT_ID }}" -var="state_bucket_name=${{ vars.TF_STATE_BUCKET }}"
+      - name: Reject destructive IAM apply plan
+        run: |
+          set -euo pipefail
+          destructive_changes="$(terraform -chdir=infra/environments/pilot-iam show -json pilot-iam.tfplan | jq -r '.resource_changes[]? | select(.change.actions | index("delete")) | .address')"
+          test -z "$destructive_changes"
+      - run: terraform -chdir=infra/environments/pilot-iam apply -input=false pilot-iam.tfplan
