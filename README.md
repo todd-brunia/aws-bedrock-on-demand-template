@@ -5,6 +5,11 @@ A public, account-neutral Terraform template for using Amazon Bedrock from
 servers, VPCs, agents, knowledge bases, custom models, or provisioned throughput.
 Inference is on-demand and pay-per-use.
 
+It works with either a new dedicated workload account or a client-owned AWS
+foundation that already has Organizations and IAM resources in place. Existing
+client identity resources remain client-owned; the template integrates with
+approved roles/OIDC and provisions the Bedrock-specific layers separately.
+
 ## Start here: the mental model
 
 This is a client-owned AWS foundation for using approved Bedrock models from a
