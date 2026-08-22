@@ -8,6 +8,13 @@ chat application, model proxy, autonomous agent, or always-running inference
 service. Your prompts start on your local machine; AWS authenticates the session
 and meters the selected model's on-demand usage.
 
+It is best suited to someone who has moved beyond simply trying AI and now wants
+to compare alternatives to hosted tools—such as a coding assistant—while keeping
+model selection, access, and spend under their own AWS controls. It assumes a
+comfortable working knowledge of the command line, GitHub, and the basics of an
+AWS account; it is not an entry-level AI course. See the [AI and AWS
+glossary](glossary.md) whenever a term is unfamiliar.
+
 ```text
 You + OpenCode on your workstation
         │ AWS IAM Identity Center temporary credentials
@@ -40,6 +47,10 @@ Terraform configuration but cannot become a general model runtime.
 - **Safer experimentation:** short-lived SSO credentials, narrowly scoped model
   access, application-inference-profile tags, and budget alerts make it easier
   to test models without distributing provider keys.
+- **A practical cost-management path:** the template makes it possible to
+  compare Bedrock models and their token usage while separating AWS foundation
+  costs from model inference costs. It complements—not replaces—the subscription
+  and usage controls of other AI tools.
 
 ## Good-fit use cases
 

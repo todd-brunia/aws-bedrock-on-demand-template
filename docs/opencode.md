@@ -1,7 +1,9 @@
 # OpenCode setup
 
-OpenCode supports Amazon Bedrock through an AWS named profile. Use AWS IAM
-Identity Center credentials so OpenCode receives only temporary credentials.
+OpenCode supports [Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)
+through an AWS named profile; see the [OpenCode provider documentation](https://opencode.ai/docs/providers)
+for its current provider configuration. Use AWS IAM Identity Center credentials
+so OpenCode receives only temporary credentials.
 Do not use `/connect`, `AWS_BEARER_TOKEN_BEDROCK`, or AWS access keys for this
 repository: a stored bearer token can override the intended profile chain.
 

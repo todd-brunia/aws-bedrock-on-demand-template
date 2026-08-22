@@ -9,7 +9,8 @@ credentials, SSO tokens, state, or generated `opencode.json` in the fork.
 
 1. Fork this repository into the client's GitHub owner or organization.
 2. Clone the fork locally and read [SECURITY.md](../SECURITY.md),
-   [the mental model](mental-model.md), and [the cost estimator](cost-estimator.md).
+   [the mental model](mental-model.md), [the AI and AWS glossary](glossary.md),
+   and [the cost estimator](cost-estimator.md).
 3. Decide the initial model catalog, budget notification owner, trusted
    workload role, and who will approve the GitHub `pilot` environment.
 4. Keep the fork's `main` branch protected. Use pull requests for all changes,

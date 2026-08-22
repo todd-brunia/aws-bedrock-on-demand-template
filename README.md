@@ -16,8 +16,15 @@ It helps clients get value quickly by combining model choice, low operational
 overhead, identity boundaries, cost attribution, and budget alerts. Read the
 [mental model and quick start](docs/mental-model.md) before provisioning.
 
+This is an intermediate infrastructure exercise, rather than a first
+introduction to AI. It is for people who have already used AI tools (including
+hosted coding assistants) and want to evaluate a client-owned, cost-conscious
+alternative with more control over model choice, AWS identity, and usage.
+
 For the complete client path—from fork through teardown—follow [client
 onboarding](docs/client-onboarding.md).
+
+New to the vocabulary? Start with the [AI and AWS glossary](docs/glossary.md).
 
 ## What this provisions
 
