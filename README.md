@@ -30,6 +30,12 @@ The default example model is Amazon Nova Lite. The model catalog is an explicit
 map so an operator can add currently supported DeepSeek or Qwen candidates only
 after the preflight checks described in [model catalog](docs/model-catalog.md).
 
+## Cost planning
+
+Use the [cost estimator](docs/cost-estimator.md) to prepare a rough,
+client-specific planning estimate. It separates template control-plane/runtime
+costs from Bedrock model-token usage and makes no pricing guarantee.
+
 ## OpenCode
 
 OpenCode uses an AWS named SSO profile, not a stored provider key. After apply:
