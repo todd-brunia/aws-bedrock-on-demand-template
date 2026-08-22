@@ -16,6 +16,9 @@ It helps clients get value quickly by combining model choice, low operational
 overhead, identity boundaries, cost attribution, and budget alerts. Read the
 [mental model and quick start](docs/mental-model.md) before provisioning.
 
+For the complete client path—from fork through teardown—follow [client
+onboarding](docs/client-onboarding.md).
+
 ## What this provisions
 
 1. A one-time Terraform state and GitHub OIDC bootstrap.
