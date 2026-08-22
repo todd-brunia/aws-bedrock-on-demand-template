@@ -1,0 +1,10 @@
+budget_notification_email = "owner@example.com"
+
+# Start with Nova Lite. Add a DeepSeek or Qwen entry only after following
+# docs/model-catalog.md and copying the exact source ARN reported by AWS.
+model_catalog = {
+  nova-lite = {
+    model_source_arn = "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-lite-v1:0"
+    description      = "Low-cost default text model."
+  }
+}

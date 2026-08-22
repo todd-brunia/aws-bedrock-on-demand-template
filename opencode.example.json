@@ -1,0 +1,17 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "amazon-bedrock": {
+      "options": {
+        "region": "us-east-1",
+        "profile": "REPLACE_WITH_AWS_SSO_PROFILE"
+      },
+      "models": {
+        "nova-lite": {
+          "id": "REPLACE_WITH_APPLICATION_INFERENCE_PROFILE_ARN"
+        }
+      }
+    }
+  },
+  "model": "amazon-bedrock/nova-lite"
+}

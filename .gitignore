@@ -1,0 +1,12 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+crash.log
+
+# Account-specific OpenCode configuration is intentionally local.
+opencode.json
+
+# AWS CLI SSO caches and credentials are outside this repository.
+.aws/
