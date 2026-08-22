@@ -1,6 +1,9 @@
 # KeePassXC setup
 
-Create a dedicated KeePassXC database or group named `AWS Bedrock On-Demand`.
+[KeePassXC](https://keepassxc.org/) is a local, open-source password manager.
+Use it to record recovery and configuration information that a human administrator
+needs, not as a place to copy active AWS credentials or session tokens. Create a
+dedicated KeePassXC database or group named `AWS Bedrock On-Demand`.
 Protect it with a strong unique passphrase and a separate key file stored away
 from the database. Keep the database and key file in independently backed-up
 locations.

@@ -5,6 +5,12 @@ Bedrock application inference profile. This gives model-level IAM permissions
 and cost attribution. Adding a model is not an OpenCode-only configuration
 change.
 
+Start with [Amazon Nova](https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html)
+only as the reviewed example, not as the sole supported choice. Consult the
+[Amazon Bedrock model catalog](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)
+and [inference profile documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles.html)
+when evaluating another provider or model family.
+
 For every candidate, while authenticated to the workload account:
 
 1. Check the current Bedrock model catalog, supported Region, pricing, and

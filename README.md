@@ -5,6 +5,27 @@ A public, account-neutral Terraform template for using Amazon Bedrock from
 servers, VPCs, agents, knowledge bases, custom models, or provisioned throughput.
 Inference is on-demand and pay-per-use.
 
+## Start here: the mental model
+
+This is a client-owned AWS foundation for using approved Bedrock models from a
+local OpenCode session. It is **not** a hosted chat application or always-on AI
+service: OpenCode runs locally, AWS SSO supplies temporary credentials, and the
+selected model is invoked on demand through a narrowly scoped runtime role.
+
+It helps clients get value quickly by combining model choice, low operational
+overhead, identity boundaries, cost attribution, and budget alerts. Read the
+[mental model and quick start](docs/mental-model.md) before provisioning.
+
+This is an intermediate infrastructure exercise, rather than a first
+introduction to AI. It is for people who have already used AI tools (including
+hosted coding assistants) and want to evaluate a client-owned, cost-conscious
+alternative with more control over model choice, AWS identity, and usage.
+
+For the complete client path—from fork through teardown—follow [client
+onboarding](docs/client-onboarding.md).
+
+New to the vocabulary? Start with the [AI and AWS glossary](docs/glossary.md).
+
 ## What this provisions
 
 1. A one-time Terraform state and GitHub OIDC bootstrap.
@@ -29,6 +50,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the public contribution workflow.
 The default example model is Amazon Nova Lite. The model catalog is an explicit
 map so an operator can add currently supported DeepSeek or Qwen candidates only
 after the preflight checks described in [model catalog](docs/model-catalog.md).
+
+## Cost planning
+
+Use the [cost estimator](docs/cost-estimator.md) to prepare a rough,
+client-specific planning estimate. It separates template control-plane/runtime
+costs from Bedrock model-token usage and makes no pricing guarantee.
 
 ## OpenCode
 
