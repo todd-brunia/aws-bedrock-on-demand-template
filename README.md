@@ -23,6 +23,9 @@ Follow [the account foundation guide](docs/aws-account-foundation.md), then
 ID, root email, AWS key, Bedrock bearer token, state bucket name, or notification
 email into tracked files.
 
+Read [SECURITY.md](SECURITY.md) before deploying or reporting a vulnerability.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the public contribution workflow.
+
 The default example model is Amazon Nova Lite. The model catalog is an explicit
 map so an operator can add currently supported DeepSeek or Qwen candidates only
 after the preflight checks described in [model catalog](docs/model-catalog.md).
