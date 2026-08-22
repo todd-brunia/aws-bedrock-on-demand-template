@@ -5,6 +5,17 @@ A public, account-neutral Terraform template for using Amazon Bedrock from
 servers, VPCs, agents, knowledge bases, custom models, or provisioned throughput.
 Inference is on-demand and pay-per-use.
 
+## Start here: the mental model
+
+This is a client-owned AWS foundation for using approved Bedrock models from a
+local OpenCode session. It is **not** a hosted chat application or always-on AI
+service: OpenCode runs locally, AWS SSO supplies temporary credentials, and the
+selected model is invoked on demand through a narrowly scoped runtime role.
+
+It helps clients get value quickly by combining model choice, low operational
+overhead, identity boundaries, cost attribution, and budget alerts. Read the
+[mental model and quick start](docs/mental-model.md) before provisioning.
+
 ## What this provisions
 
 1. A one-time Terraform state and GitHub OIDC bootstrap.
