@@ -140,7 +140,8 @@ trusted-role ARN, application inference profile ARN, model access/terms, and
 the selected Region. Do not work around a denial by adding broad Bedrock IAM
 permissions. An inference-profile invocation policy must also permit the
 underlying foundation-model ARN, conditioned on the matching inference-profile
-ARN; this template manages that pairing in the IAM stack.
+ARN with Bedrock's `bedrock:InferenceProfileArn` condition key; this template
+manages that pairing in the IAM stack.
 
 ## 7. Operate and remove resources
 
