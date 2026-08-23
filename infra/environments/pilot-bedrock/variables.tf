@@ -16,12 +16,19 @@ variable "monthly_budget_usd" {
   default = 20
 }
 variable "model_catalog" {
-  description = "Approved aliases and exact Bedrock model source ARNs. Add a model only after the preflight runbook succeeds."
-  type        = map(object({ model_source_arn = string, description = string }))
+  description = "Approved aliases, exact Bedrock model source ARNs, and OpenCode limits. Add a model only after the preflight runbook succeeds."
+  type = map(object({
+    model_source_arn      = string
+    description           = string
+    context_window_tokens = number
+    max_output_tokens     = number
+  }))
   default = {
     nova-lite = {
-      model_source_arn = "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-lite-v1:0"
-      description      = "Low-cost default text model."
+      model_source_arn      = "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-lite-v1:0"
+      description           = "Low-cost default text model."
+      context_window_tokens = 300000
+      max_output_tokens     = 5000
     }
   }
   validation {

@@ -12,16 +12,16 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 stack="$root/infra/environments/pilot-bedrock"
 
 terraform -chdir="$stack" init -input=false -backend-config="bucket=$bucket" >/dev/null
-profiles="$(terraform -chdir="$stack" output -json inference_profile_arns)"
+models="$(terraform -chdir="$stack" output -json opencode_models)"
 
-jq -n --arg profile "$profile" --argjson models "$profiles" '
+jq -n --arg profile "$profile" --argjson models "$models" '
   {
     "$schema": "https://opencode.ai/config.json",
     provider: {
       "amazon-bedrock": {
         options: { region: "us-east-1", profile: $profile },
         whitelist: ($models | keys),
-        models: ($models | with_entries({key: .key, value: {id: .value}}))
+        models: $models
       }
     },
     model: "amazon-bedrock/nova-lite"
