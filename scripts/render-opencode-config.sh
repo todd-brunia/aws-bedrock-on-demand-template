@@ -14,7 +14,7 @@ stack="$root/infra/environments/pilot-bedrock"
 terraform -chdir="$stack" init -input=false -backend-config="bucket=$bucket" >/dev/null
 profiles="$(terraform -chdir="$stack" output -json inference_profile_arns)"
 
-jq --arg profile "$profile" --argjson models "$profiles" '
+jq -n --arg profile "$profile" --argjson models "$profiles" '
   {
     "$schema": "https://opencode.ai/config.json",
     provider: {
