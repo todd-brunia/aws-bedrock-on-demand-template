@@ -20,6 +20,7 @@ jq --arg profile "$profile" --argjson models "$profiles" '
     provider: {
       "amazon-bedrock": {
         options: { region: "us-east-1", profile: $profile },
+        whitelist: ($models | keys),
         models: ($models | with_entries({key: .key, value: {id: .value}}))
       }
     },
