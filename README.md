@@ -53,8 +53,9 @@ Read [SECURITY.md](SECURITY.md) before deploying or reporting a vulnerability.
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the public contribution workflow.
 
 The default example model is Amazon Nova Lite. The model catalog is an explicit
-map so an operator can add currently supported DeepSeek or Qwen candidates only
-after the preflight checks described in [model catalog](docs/model-catalog.md).
+map; an opt-in starter catalog for Claude, Llama, Mistral, DeepSeek, and Qwen
+is available after the preflight checks described in
+[model catalog](docs/model-catalog.md).
 
 ## Cost planning
 
@@ -64,17 +65,20 @@ costs from Bedrock model-token usage and makes no pricing guarantee.
 
 ## OpenCode
 
-OpenCode uses an AWS named SSO profile, not a stored provider key. After apply:
+OpenCode uses an AWS named SSO profile, not a stored provider key. After apply,
+start a source-profile SSO session, render the local config, and launch
+OpenCode:
 
 ```bash
-aws sso login --profile bedrock-pilot
-./scripts/render-opencode-config.sh bedrock-pilot
+aws sso login --profile bedrock-admin
+state_bucket="$(AWS_PROFILE=bedrock-admin terraform -chdir=infra/bootstrap output -raw state_bucket_name)"
+AWS_PROFILE=bedrock-admin ./scripts/render-opencode-config.sh bedrock-pilot "$state_bucket"
 opencode
 ```
 
-The script creates an ignored `opencode.json`. In OpenCode, run `/models` and
-select one of the Terraform-provisioned aliases. See
-[OpenCode setup](docs/opencode.md).
+The script creates an ignored `opencode.json`. In OpenCode, run `/models`,
+select one of the Terraform-provisioned aliases, and send a non-sensitive
+prompt. See [OpenCode setup](docs/opencode.md).
 
 ## Validation
 
