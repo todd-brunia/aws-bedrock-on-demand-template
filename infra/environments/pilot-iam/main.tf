@@ -40,8 +40,8 @@ data "aws_iam_policy_document" "runtime" {
       resources = [data.terraform_remote_state.bedrock.outputs.model_source_arns[statement.key]]
 
       condition {
-        test     = "ArnEquals"
-        variable = "aws:InferenceProfileArn"
+        test     = "StringLike"
+        variable = "bedrock:InferenceProfileArn"
         values   = [statement.value]
       }
     }
