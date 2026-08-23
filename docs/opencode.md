@@ -52,11 +52,30 @@ Bedrock provider available in every local project:
 ```
 
 Merge this `amazon-bedrock` object with any existing `provider` entries; do not
-replace unrelated global providers. Keep the generated model aliases and their
-application inference-profile ARNs project-local. Those ARNs are account- and
-deployment-specific, and become invalid after the protected destroy workflow.
-When the pilot is deployed again, regenerate the project `opencode.json` to
-restore its approved aliases and limits.
+replace unrelated global providers. The provider connection is durable, but the
+model aliases and their application inference-profile ARNs are deployment-
+specific and become invalid after the protected destroy workflow.
+
+After each protected Terraform apply, add the current approved aliases and
+limits to the global config:
+
+```bash
+aws sso login --profile bedrock-admin
+state_bucket="$(AWS_PROFILE=bedrock-admin terraform -chdir=infra/bootstrap output -raw state_bucket_name)"
+AWS_PROFILE=bedrock-admin ./scripts/render-opencode-config.sh bedrock-pilot "$state_bucket" --global
+opencode
+```
+
+In OpenCode, run `/models` and select an `amazon-bedrock/<alias>` entry. The
+renderer changes only the `amazon-bedrock` provider and preserves other
+personal providers. When you are finished using the environment, exit OpenCode,
+run the protected **Terraform destroy** workflow and type `DESTROY BEDROCK
+PILOT`, then clear only the stale global aliases while retaining the profile and
+Region connection:
+
+```bash
+./scripts/render-opencode-config.sh --clear-global-models
+```
 
 ## Everyday start and stop
 
