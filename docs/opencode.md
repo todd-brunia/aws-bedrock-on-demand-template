@@ -30,6 +30,25 @@ profiles were successfully provisioned. In OpenCode, use `/models` and select
 `amazon-bedrock/nova-lite`; do not change a profile ARN manually to bypass the
 approved catalog.
 
+## Everyday start and stop
+
+From the repository root, after the Bedrock and IAM stacks have been applied:
+
+```bash
+aws sso login --profile bedrock-admin
+state_bucket="$(AWS_PROFILE=bedrock-admin terraform -chdir=infra/bootstrap output -raw state_bucket_name)"
+AWS_PROFILE=bedrock-admin ./scripts/render-opencode-config.sh bedrock-pilot "$state_bucket"
+opencode
+```
+
+In OpenCode, run `/models` and choose an `amazon-bedrock/<alias>` listed in the
+generated configuration. Use a short, non-sensitive prompt for a first test.
+Exit OpenCode when finished. Running OpenCode locally has no idle Bedrock cost;
+the chosen model is billed only when a request is sent. To remove the deployed
+profiles, runtime role, and budget when the environment is no longer needed,
+run the protected **Terraform destroy** workflow and type `DESTROY BEDROCK
+PILOT`.
+
 Before starting OpenCode, confirm that the source role behind `bedrock-pilot`
 has permission to call `sts:AssumeRole` on
 `bedrock-on-demand-pilot-runtime`. The runtime role's trust policy does not

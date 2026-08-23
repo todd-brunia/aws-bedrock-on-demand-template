@@ -11,6 +11,73 @@ only as the reviewed example, not as the sole supported choice. Consult the
 and [inference profile documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles.html)
 when evaluating another provider or model family.
 
+## Opt-in multi-provider starter catalog
+
+`infra/environments/pilot-bedrock/model-catalog-multi-provider.example.tfvars`
+contains one streaming text model each from Amazon, Anthropic, Meta, Mistral,
+DeepSeek, and Qwen that was found active in the pilot account's `us-east-1`
+catalog during this template validation. It is an example file and is not
+loaded by Terraform, so merging it creates no profiles and no cost.
+
+Select one or more entries only after the preflight below, then copy them into
+the tracked `model-catalog.tfvars` in a reviewed pull request. The example uses
+conservative OpenCode context and output caps to limit initial usage; revisit
+them after a model-specific evaluation. Recheck availability, pricing, and
+provider terms immediately before every enablement because the Bedrock catalog
+changes over time.
+
+Amazon Titan and Cohere are intentionally not in this OpenCode chat catalog:
+the validated regional inventory exposed Titan embeddings and Cohere
+embedding/reranking models, rather than streaming conversational models.
+
+## Find and add a new OpenCode model
+
+Use the workload administrator profile to inspect the live regional catalog;
+do not copy an identifier from an old blog post or another Region:
+
+```bash
+AWS_PROFILE=bedrock-admin aws bedrock list-foundation-models \
+  --region us-east-1 \
+  --by-output-modality TEXT \
+  --query 'modelSummaries[?modelLifecycle.status==`ACTIVE`].{provider:providerName,name:modelName,id:modelId,streaming:responseStreamingSupported}' \
+  --output table
+```
+
+Choose a model with `streaming` set to `True` for OpenCode. Inspect the
+candidate without invoking it:
+
+```bash
+model_id='REPLACE_WITH_MODEL_ID'
+AWS_PROFILE=bedrock-admin aws bedrock get-foundation-model \
+  --region us-east-1 \
+  --model-identifier "$model_id"
+```
+
+Then follow this sequence:
+
+1. Read the current AWS model card, pricing page, and provider terms. In the
+   Bedrock console's **Model catalog**, complete any required access request or
+   Marketplace subscription for the workload account. Do not accept terms on
+   behalf of a client without their authorization.
+2. Confirm the model supports the Bedrock runtime path OpenCode uses. For a
+   direct regional model, form the source ARN as
+   `arn:aws:bedrock:us-east-1::foundation-model/<model-id>`. If AWS requires a
+   cross-Region system inference profile, use the exact source ARN AWS reports
+   instead.
+3. Start with a conservative output cap (for example, 1,024 tokens) and a
+   context value no larger than the documented model limit. These values become
+   the generated OpenCode limits and can be increased later through review.
+4. Add only that entry to the tracked
+   `infra/environments/pilot-bedrock/model-catalog.tfvars` in a pull request.
+   Do not edit the generated `opencode.json` to add a model.
+5. After review and the protected Terraform apply, regenerate `opencode.json`,
+   start OpenCode, run `/models`, and choose `amazon-bedrock/<alias>`. Make one
+   short non-sensitive test request and record the result and observed cost.
+
+To keep cost and troubleshooting scope small, enable and test one new model at
+a time. Remove its catalog entry and run the protected apply if it is not an
+approved ongoing option.
+
 For every candidate, while authenticated to the workload account:
 
 1. Check the current Bedrock model catalog, supported Region, pricing, and
