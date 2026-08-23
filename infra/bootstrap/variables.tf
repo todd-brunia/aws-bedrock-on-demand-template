@@ -2,6 +2,10 @@ variable "aws_account_id" { type = string }
 variable "aws_region" {
   type    = string
   default = "us-east-1"
+  validation {
+    condition     = var.aws_region == "us-east-1"
+    error_message = "Bootstrap is pinned to us-east-1 because the pilot remote-state backends are pinned to us-east-1."
+  }
 }
 variable "state_bucket_name" { type = string }
 variable "github_repository" { type = string }
