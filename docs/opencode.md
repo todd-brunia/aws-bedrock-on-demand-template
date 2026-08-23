@@ -30,6 +30,34 @@ profiles were successfully provisioned. In OpenCode, use `/models` and select
 `amazon-bedrock/nova-lite`; do not change a profile ARN manually to bypass the
 approved catalog.
 
+## Global provider configuration (optional)
+
+OpenCode loads the personal global configuration from
+`~/.config/opencode/opencode.json`; a project `opencode.json` takes precedence
+over it. You can place the durable connection settings there when you want the
+Bedrock provider available in every local project:
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "amazon-bedrock": {
+      "options": {
+        "region": "us-east-1",
+        "profile": "bedrock-pilot"
+      }
+    }
+  }
+}
+```
+
+Merge this `amazon-bedrock` object with any existing `provider` entries; do not
+replace unrelated global providers. Keep the generated model aliases and their
+application inference-profile ARNs project-local. Those ARNs are account- and
+deployment-specific, and become invalid after the protected destroy workflow.
+When the pilot is deployed again, regenerate the project `opencode.json` to
+restore its approved aliases and limits.
+
 ## Everyday start and stop
 
 From the repository root, after the Bedrock and IAM stacks have been applied:
