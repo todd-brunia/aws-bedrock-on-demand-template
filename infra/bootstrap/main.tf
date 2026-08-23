@@ -95,7 +95,7 @@ data "aws_iam_policy_document" "plan" {
     resources = ["${aws_s3_bucket.terraform_state.arn}/pilot-*/*"]
   }
   statement {
-    actions   = ["bedrock:Get*", "bedrock:List*", "budgets:ViewBudget", "budgets:DescribeBudget", "iam:Get*", "iam:List*", "sts:GetCallerIdentity"]
+    actions   = ["bedrock:Get*", "bedrock:List*", "budgets:ViewBudget", "budgets:DescribeBudget", "budgets:ListTagsForResource", "iam:Get*", "iam:List*", "sts:GetCallerIdentity"]
     resources = ["*"]
   }
 }
