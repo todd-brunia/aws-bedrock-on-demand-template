@@ -139,9 +139,11 @@ If OpenCode cannot invoke the model, recheck the SSO session, role chain,
 trusted-role ARN, application inference profile ARN, model access/terms, and
 the selected Region. Do not work around a denial by adding broad Bedrock IAM
 permissions. An inference-profile invocation policy must also permit the
-underlying foundation-model ARN, conditioned on the matching inference-profile
-ARN with Bedrock's `bedrock:InferenceProfileArn` condition key; this template
-manages that pairing in the IAM stack.
+underlying foundation-model ARN. This template grants only the exact
+catalog-approved source model ARNs. OpenCode is configured to call the
+application inference profile, which preserves profile-based cost attribution,
+but IAM does not technically prevent a trusted runtime-role holder from calling
+an approved source model directly.
 
 ## 7. Operate and remove resources
 

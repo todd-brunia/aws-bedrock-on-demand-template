@@ -38,12 +38,6 @@ data "aws_iam_policy_document" "runtime" {
       sid       = "InvokeApprovedModelSource${replace(statement.key, "-", "")}"
       actions   = ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
       resources = [data.terraform_remote_state.bedrock.outputs.model_source_arns[statement.key]]
-
-      condition {
-        test     = "StringLike"
-        variable = "bedrock:InferenceProfileArn"
-        values   = [statement.value]
-      }
     }
   }
   statement {
