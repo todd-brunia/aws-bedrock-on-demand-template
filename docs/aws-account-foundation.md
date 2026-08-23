@@ -1,7 +1,25 @@
 # AWS account foundation
 
-Create a dedicated member account from the AWS Organizations management account.
-Do not provision Bedrock resources in the management account.
+This template supports two starting points:
+
+- **New workload account:** create a dedicated member account from the AWS
+  Organizations management account. Do not provision Bedrock resources in the
+  management account.
+- **Client-provided foundation:** use an existing approved workload account and
+  integrate with the client's established AWS Organizations, IAM Identity
+  Center, IAM roles, and GitHub OIDC provider. The template provisions only its
+  Bedrock profiles, budget, narrowly scoped runtime role, and dedicated
+  Terraform control-plane resources; it does not take ownership of or modify
+  the client's existing organization or identity foundation.
+
+For a client-provided foundation, document the approved account, administrator
+permission set, trusted workload role ARNs, existing OIDC-provider ARN, and
+state-bucket custody with the client. Set `github_oidc_provider_arn` during
+bootstrap to adopt the existing GitHub OIDC provider rather than creating a
+duplicate. Do not import, alter, or destroy client-owned IAM/organization
+resources unless a separate reviewed engagement explicitly authorizes it.
+
+For a new workload account, complete the following steps:
 
 1. Choose a unique, recoverable root email for the new workload account and
    create it in AWS Organizations. Retain the organization access role.
