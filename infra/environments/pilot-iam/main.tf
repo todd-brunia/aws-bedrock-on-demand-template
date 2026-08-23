@@ -31,6 +31,21 @@ data "aws_iam_policy_document" "runtime" {
     actions   = ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
     resources = values(data.terraform_remote_state.bedrock.outputs.inference_profile_arns)
   }
+  dynamic "statement" {
+    for_each = data.terraform_remote_state.bedrock.outputs.inference_profile_arns
+
+    content {
+      sid       = "InvokeApprovedModelSource${replace(statement.key, "-", "")}"
+      actions   = ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"]
+      resources = [data.terraform_remote_state.bedrock.outputs.model_source_arns[statement.key]]
+
+      condition {
+        test     = "ArnEquals"
+        variable = "aws:InferenceProfileArn"
+        values   = [statement.value]
+      }
+    }
+  }
   statement {
     sid       = "ReadApprovedCatalog"
     actions   = ["bedrock:GetInferenceProfile", "bedrock:ListInferenceProfiles"]
