@@ -25,6 +25,12 @@ aws sso login --profile bedrock-admin
 opencode
 ```
 
-OpenCode's `/models` menu contains only aliases whose Terraform inference
-profiles were successfully provisioned. Switch models there; do not change a
-profile ARN manually to bypass the approved catalog.
+The generated configuration whitelists only aliases whose Terraform inference
+profiles were successfully provisioned. In OpenCode, use `/models` and select
+`amazon-bedrock/nova-lite`; do not change a profile ARN manually to bypass the
+approved catalog.
+
+Before starting OpenCode, confirm that the source role behind `bedrock-pilot`
+has permission to call `sts:AssumeRole` on
+`bedrock-on-demand-pilot-runtime`. The runtime role's trust policy does not
+grant that source-side permission.

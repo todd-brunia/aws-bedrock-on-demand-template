@@ -80,7 +80,7 @@ client account inventory:
 | `TF_STATE_BUCKET` | the bootstrap state-bucket name |
 | `AWS_TERRAFORM_PLAN_ROLE_ARN` | bootstrap `github_plan_role_arn` output |
 | `AWS_TERRAFORM_APPLY_ROLE_ARN` | bootstrap `github_apply_role_arn` output |
-| `TRUSTED_WORKLOAD_ROLE_ARNS_JSON` | JSON array containing the approved local/workload role ARN(s) |
+| `TRUSTED_WORKLOAD_ROLE_ARNS_JSON` | `pilot` environment variable: JSON array containing approved local/workload role ARN(s) |
 
 Add `BUDGET_NOTIFICATION_EMAIL` as a GitHub environment secret, not a variable.
 For example, the trusted-role value has this shape:
@@ -90,6 +90,9 @@ For example, the trusted-role value has this shape:
 ```
 
 Never configure access keys or Bedrock bearer tokens in GitHub Actions.
+Each listed source role must separately have `sts:AssumeRole` permission for
+`bedrock-on-demand-pilot-runtime`; the runtime role's trust policy alone does
+not grant it.
 
 ## 5. Select the initial model and provision
 
