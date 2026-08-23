@@ -25,6 +25,10 @@ human reviewers for `pilot`. Set repository variables: `AWS_ACCOUNT_ID`,
 environment secret. Use JSON for the trusted roles, for example
 `["arn:aws:iam::123456789012:role/approved-role"]`.
 
+The plan role trusts the `pilot-plan` environment rather than a raw pull-request
+subject because GitHub OIDC uses the environment-based subject for every job
+that references an environment, including pull-request workflows.
+
 ## Deploy
 
 Merge a reviewed catalog change, then dispatch **Terraform apply** from the

@@ -100,7 +100,8 @@ not grant it.
    [model catalog](model-catalog.md) and make the catalog change in a reviewed
    pull request.
 2. Open or update a pull request. The Terraform validation and remote-plan
-   workflows should complete without granting AWS credentials to fork PRs.
+   workflows should complete without granting AWS credentials to fork PRs. The
+   remote-plan job uses the protected `pilot-plan` environment.
 3. Merge the reviewed change to `main`.
 4. In **Actions**, run **Terraform apply**, providing the exact current `main`
    commit SHA. A protected `pilot` approver reviews the environment request.
