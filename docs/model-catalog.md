@@ -20,12 +20,15 @@ For every candidate, while authenticated to the workload account:
 3. Derive the exact `model_source_arn` accepted by `CreateInferenceProfile`.
    Direct models use a foundation-model ARN; cross-Region choices may need the
    applicable system inference profile ARN.
-4. Add a descriptive alias and exact source ARN to
+4. Record the documented context-window and maximum-output-token limits. The
+   generated OpenCode configuration uses these limits to avoid sending a
+   request that Bedrock will reject.
+5. Add a descriptive alias, exact source ARN, and both limits to
    `infra/environments/pilot-bedrock/model-catalog.tfvars` in a reviewed pull
    request, then run the protected apply workflow. This file is intentionally
    tracked because it is the reviewed public catalog; use the ignored
    `terraform.tfvars` or `*.auto.tfvars` files only for account-specific values.
-5. Regenerate the ignored OpenCode config and use `/models` to test the alias.
+6. Regenerate the ignored OpenCode config and use `/models` to test the alias.
 
 Start with `nova-lite`. DeepSeek and Qwen are intended candidates, not permanent
 facts: model IDs, pricing, regional support, and EULA requirements can change.
