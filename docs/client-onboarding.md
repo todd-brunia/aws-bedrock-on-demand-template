@@ -49,7 +49,9 @@ Bedrock model access yet.
 
 1. Copy `infra/bootstrap/terraform.tfvars.example` to the ignored
    `infra/bootstrap/terraform.tfvars` and fill in the client workload account,
-   unique state-bucket name, and fork owner/repository name.
+   unique state-bucket name, and exact GitHub OIDC subject prefix. Obtain the
+   prefix with `gh api repos/OWNER/REPOSITORY/actions/oidc/customization/sub
+   --jq .sub_claim_prefix`; do not derive it manually from the repository name.
 2. If the workload account already has GitHub OIDC, set
    `github_oidc_provider_arn`; this adopts it instead of creating another one.
 3. Review and apply a saved plan:

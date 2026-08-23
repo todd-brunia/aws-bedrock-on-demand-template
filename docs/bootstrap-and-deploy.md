@@ -8,6 +8,8 @@ saved plan using an IAM Identity Center session; never use an access key.
 
 ```bash
 cp infra/bootstrap/terraform.tfvars.example infra/bootstrap/terraform.tfvars
+# Set github_oidc_subject_prefix to the exact value returned by:
+# gh api repos/OWNER/REPOSITORY/actions/oidc/customization/sub --jq .sub_claim_prefix
 aws sso login --profile bedrock-admin
 AWS_PROFILE=bedrock-admin terraform -chdir=infra/bootstrap init -backend=false -input=false
 AWS_PROFILE=bedrock-admin terraform -chdir=infra/bootstrap plan -out=bootstrap.tfplan
@@ -15,7 +17,10 @@ AWS_PROFILE=bedrock-admin terraform -chdir=infra/bootstrap apply bootstrap.tfpla
 ```
 
 If GitHub OIDC already exists, set `github_oidc_provider_arn` first. Do not
-create a second account-level provider.
+create a second account-level provider. Set `github_oidc_subject_prefix` from
+GitHub's OIDC customization endpoint exactly as returned; do not reconstruct it
+from the repository name. Newer GitHub repositories can include immutable owner
+and repository IDs in this prefix.
 
 Configure protected GitHub environments named `pilot` and `pilot-plan`; require
 human reviewers for `pilot`. Set repository variables: `AWS_ACCOUNT_ID`,

@@ -48,7 +48,7 @@ data "aws_iam_policy_document" "plan_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:environment:pilot-plan"]
+      values   = ["${var.github_oidc_subject_prefix}:environment:pilot-plan"]
     }
   }
 }
@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "apply_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:environment:${var.pilot_environment_name}"]
+      values   = ["${var.github_oidc_subject_prefix}:environment:${var.pilot_environment_name}"]
     }
   }
 }
