@@ -107,7 +107,7 @@ data "aws_iam_policy_document" "apply" {
     resources = ["*"]
   }
   statement {
-    actions   = ["budgets:CreateBudget", "budgets:ModifyBudget", "budgets:DeleteBudget", "budgets:CreateNotification", "budgets:DeleteNotification", "budgets:CreateSubscriber", "budgets:DeleteSubscriber"]
+    actions   = ["budgets:CreateBudget", "budgets:ModifyBudget", "budgets:DeleteBudget", "budgets:CreateNotification", "budgets:DeleteNotification", "budgets:CreateSubscriber", "budgets:DeleteSubscriber", "budgets:TagResource", "budgets:UntagResource"]
     resources = ["*"]
   }
   statement {
