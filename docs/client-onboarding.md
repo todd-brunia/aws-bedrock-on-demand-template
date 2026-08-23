@@ -49,7 +49,9 @@ Bedrock model access yet.
 
 1. Copy `infra/bootstrap/terraform.tfvars.example` to the ignored
    `infra/bootstrap/terraform.tfvars` and fill in the client workload account,
-   unique state-bucket name, and fork owner/repository name.
+   unique state-bucket name, and exact GitHub OIDC subject prefix. Obtain the
+   prefix with `gh api repos/OWNER/REPOSITORY/actions/oidc/customization/sub
+   --jq .sub_claim_prefix`; do not derive it manually from the repository name.
 2. If the workload account already has GitHub OIDC, set
    `github_oidc_provider_arn`; this adopts it instead of creating another one.
 3. Review and apply a saved plan:
@@ -100,7 +102,8 @@ not grant it.
    [model catalog](model-catalog.md) and make the catalog change in a reviewed
    pull request.
 2. Open or update a pull request. The Terraform validation and remote-plan
-   workflows should complete without granting AWS credentials to fork PRs.
+   workflows should complete without granting AWS credentials to fork PRs. The
+   remote-plan job uses the protected `pilot-plan` environment.
 3. Merge the reviewed change to `main`.
 4. In **Actions**, run **Terraform apply**, providing the exact current `main`
    commit SHA. A protected `pilot` approver reviews the environment request.

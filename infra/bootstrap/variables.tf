@@ -8,7 +8,14 @@ variable "aws_region" {
   }
 }
 variable "state_bucket_name" { type = string }
-variable "github_repository" { type = string }
+variable "github_oidc_subject_prefix" {
+  type        = string
+  description = "Exact GitHub OIDC subject prefix for this repository, obtained from GitHub's OIDC customization endpoint. It begins with repo:."
+  validation {
+    condition     = startswith(var.github_oidc_subject_prefix, "repo:")
+    error_message = "github_oidc_subject_prefix must begin with repo:."
+  }
+}
 variable "pilot_environment_name" {
   type    = string
   default = "pilot"

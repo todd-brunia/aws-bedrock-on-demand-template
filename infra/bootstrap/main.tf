@@ -48,7 +48,7 @@ data "aws_iam_policy_document" "plan_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:pull_request"]
+      values   = ["${var.github_oidc_subject_prefix}:environment:pilot-plan"]
     }
   }
 }
@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "apply_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:environment:${var.pilot_environment_name}"]
+      values   = ["${var.github_oidc_subject_prefix}:environment:${var.pilot_environment_name}"]
     }
   }
 }
@@ -107,7 +107,7 @@ data "aws_iam_policy_document" "apply" {
     resources = ["*"]
   }
   statement {
-    actions   = ["budgets:CreateBudget", "budgets:ModifyBudget", "budgets:DeleteBudget", "budgets:CreateNotification", "budgets:DeleteNotification", "budgets:CreateSubscriber", "budgets:DeleteSubscriber"]
+    actions   = ["budgets:CreateBudget", "budgets:ModifyBudget", "budgets:DeleteBudget", "budgets:CreateNotification", "budgets:DeleteNotification", "budgets:CreateSubscriber", "budgets:DeleteSubscriber", "budgets:TagResource", "budgets:UntagResource"]
     resources = ["*"]
   }
   statement {
