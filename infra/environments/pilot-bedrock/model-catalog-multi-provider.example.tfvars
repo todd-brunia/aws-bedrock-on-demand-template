@@ -1,7 +1,7 @@
 # Opt-in starter catalog for OpenCode chat. Before using any entry, confirm the
 # current AWS pricing, regional availability, provider terms, and model access
 # in the workload account. Copy selected entries—not necessarily all of them—
-# into model-catalog.tfvars in a reviewed pull request.
+# into model-catalog.auto.tfvars in a reviewed pull request.
 #
 # The limits below are intentionally conservative OpenCode operating caps. They
 # are not claims about the providers' maximum supported context or output.
