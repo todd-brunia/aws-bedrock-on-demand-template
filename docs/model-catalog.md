@@ -20,7 +20,7 @@ catalog during this template validation. It is an example file and is not
 loaded by Terraform, so merging it creates no profiles and no cost.
 
 Select one or more entries only after the preflight below, then copy them into
-the tracked `model-catalog.tfvars` in a reviewed pull request. The example uses
+the tracked, auto-loaded `model-catalog.auto.tfvars` in a reviewed pull request. The example uses
 conservative OpenCode context and output caps to limit initial usage; revisit
 them after a model-specific evaluation. Recheck availability, pricing, and
 provider terms immediately before every enablement because the Bedrock catalog
@@ -70,7 +70,7 @@ Then follow this sequence:
    context value no larger than the documented model limit. These values become
    the generated OpenCode limits and can be increased later through review.
 4. Add only that entry to the tracked
-   `infra/environments/pilot-bedrock/model-catalog.tfvars` in a pull request.
+   `infra/environments/pilot-bedrock/model-catalog.auto.tfvars` in a pull request.
    Do not edit the generated `opencode.json` to add a model.
 5. After review and the protected Terraform apply, regenerate `opencode.json`,
    start OpenCode, run `/models`, and choose `amazon-bedrock/<alias>`. Make one
@@ -94,7 +94,7 @@ For every candidate, while authenticated to the workload account:
    generated OpenCode configuration uses these limits to avoid sending a
    request that Bedrock will reject.
 5. Add a descriptive alias, one exact source form, and both limits to
-   `infra/environments/pilot-bedrock/model-catalog.tfvars` in a reviewed pull
+   `infra/environments/pilot-bedrock/model-catalog.auto.tfvars` in a reviewed pull
    request, then run the protected apply workflow. This file is intentionally
    tracked because it is the reviewed public catalog; use the ignored
    `terraform.tfvars` or `*.auto.tfvars` files only for account-specific values.
