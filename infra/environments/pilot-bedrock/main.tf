@@ -2,7 +2,7 @@ resource "aws_bedrock_inference_profile" "model" {
   for_each    = var.model_catalog
   name        = "bedrock-on-demand-pilot-${each.key}"
   description = each.value.description
-  model_source { copy_from = each.value.model_source_arn }
+  model_source { copy_from = local.model_source_arns[each.key] }
   tags = merge(local.tags, { ModelAlias = each.key })
 }
 

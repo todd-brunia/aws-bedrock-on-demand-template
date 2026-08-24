@@ -60,10 +60,12 @@ Then follow this sequence:
    Marketplace subscription for the workload account. Do not accept terms on
    behalf of a client without their authorization.
 2. Confirm the model supports the Bedrock runtime path OpenCode uses. For a
-   direct regional model, form the source ARN as
+   direct regional model, set `model_source_arn` to
    `arn:aws:bedrock:us-east-1::foundation-model/<model-id>`. If AWS requires a
-   cross-Region system inference profile, use the exact source ARN AWS reports
-   instead.
+   cross-Region system inference profile, set
+   `system_inference_profile_id` to the exact profile ID AWS reports (for
+   example, `us.anthropic.claude-sonnet-4-6`). Terraform derives the
+   account-specific ARN from `aws_account_id`; do not commit an account ID.
 3. Start with a conservative output cap (for example, 1,024 tokens) and a
    context value no larger than the documented model limit. These values become
    the generated OpenCode limits and can be increased later through review.
@@ -84,13 +86,14 @@ For every candidate, while authenticated to the workload account:
    provider terms. Confirm it supports the API path OpenCode uses.
 2. Confirm access with a minimal non-sensitive prompt using the exact model or
    system inference profile identifier.
-3. Derive the exact `model_source_arn` accepted by `CreateInferenceProfile`.
-   Direct models use a foundation-model ARN; cross-Region choices may need the
-   applicable system inference profile ARN.
+3. Derive the exact source accepted by `CreateInferenceProfile`. Direct models
+   use `model_source_arn` with a foundation-model ARN; cross-Region choices use
+   `system_inference_profile_id` so Terraform can derive the applicable
+   account-specific system inference-profile ARN without committing it.
 4. Record the documented context-window and maximum-output-token limits. The
    generated OpenCode configuration uses these limits to avoid sending a
    request that Bedrock will reject.
-5. Add a descriptive alias, exact source ARN, and both limits to
+5. Add a descriptive alias, one exact source form, and both limits to
    `infra/environments/pilot-bedrock/model-catalog.tfvars` in a reviewed pull
    request, then run the protected apply workflow. This file is intentionally
    tracked because it is the reviewed public catalog; use the ignored
